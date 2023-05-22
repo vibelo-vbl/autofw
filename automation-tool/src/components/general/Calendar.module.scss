@@ -1,0 +1,44 @@
+.customEventcontainer {
+    position: relative;
+    width: 100%;
+
+    .customEventname {
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .modalContainer {
+        background-color: white;
+        position: absolute;
+        top: 0px;
+        left: 50%;
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        border-radius: 5px;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.2s ease-in-out;
+        transform: translateY(-90%);
+        width: 300px;
+        white-space: initial;
+        margin-left: -50px;
+        color: rgb(53, 51, 51);
+        word-break: break-word;
+
+        h3 {
+            font-weight: 500;
+        }
+
+        span {
+            font-weight: 700;
+        }
+
+        &.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-100%)
+        }
+    }
+}
