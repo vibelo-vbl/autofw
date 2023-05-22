@@ -16,6 +16,8 @@ const schema = yup.object({
     organization: yup.string().matches(/^[a-zA-Z ]+$/, "Must not to contains numbers, symbols, etc").required(),
     email: yup.string().email().required(),
     password: yup.string().required(),
+    admin: yup.bool(),
+    disabled: yup.bool(),
 }).required();
 
 const UserDetail = () => {
@@ -88,13 +90,13 @@ const UserDetail = () => {
                         <br />
                         Password: <br /> <input {...register("password")} type="password" />
                         {errors && errors.password ? <p> {errors.password.message} </p> : null}
-                        {/* <br />
-                        <input type="checkbox" id="admin" name="admin" />
+                        <br />
+                        <input {...register("admin")} type="checkbox" id="admin" />
                         <label for="admin">Admin</label>
                         <br />
-                        <input type="checkbox" id="disabled" name="disabled" />
+                        <input {...register("disabled")} type="checkbox" id="disabled" />
                         <label for="admin">Disabled</label>
-                        <br /> */}
+                        <br />
                         <button className={"button"} type="submit">Save</button>
                     </form>
                 </div>

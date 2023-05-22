@@ -15,12 +15,11 @@ const useRequest = (initialdata) => {
             setError(null);
 
             const myHeaders = new Headers();
-            myHeaders.append("Authorization", `Bearer ${generalToken.tokenNumber}`);
-
             if (endpoint == '/auth/login') {
                 myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
             }
             else {
+                myHeaders.append("Authorization", `Bearer ${generalToken.tokenNumber}`);
                 myHeaders.append("Content-Type", "application/json");
             }
             const response = await fetch(endpoint, {
