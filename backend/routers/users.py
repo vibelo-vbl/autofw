@@ -54,15 +54,13 @@ async def admin_user(user: User = Depends(auth_user)):
     
     return user
 
-#get users
-@router.get("/users", response_model=list[User_Reply], status_code=200, dependencies=[Depends(current_user)])
-async def users():
-    return users_schema(db_client.local.users.find())
 
-#get users by organization
-@router.get("/users_by_organization/{org}", response_model=list[User_Reply], status_code=200, dependencies=[Depends(current_user)])
-async def users_by_organization(org: str):
-    return users_schema(db_client.local.users.find({ "organization": org }))
+#get users
+@router.get("/users", response_model=list[User_Reply], status_code=200)
+async def users_by_organization(user: User = Depends(current_user)):
+    if user.superadmin:
+        return users_schema(db_client.local.users.find())
+    return users_schema(db_client.local.users.find({ "organization": user.organization }))
 
 #get parameters of current user auth
 @router.get("/me")

@@ -9,7 +9,8 @@ class User(BaseModel):
     organization: str
     disabled: bool
     password: str
-    admin: bool
+    superadmin: bool | None
+    admin: bool 
 
 class User_Reply(BaseModel):
     id: str | None

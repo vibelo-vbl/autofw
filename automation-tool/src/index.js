@@ -12,11 +12,12 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import EventDetail from './components/views/EventDetail';
-import { GeneralCounterContextProvider } from './context/GeneralCounterContext';
+// import { GeneralCounterContextProvider } from './context/GeneralCounterContext';
 import Token from './components/views/Token';
 import { GeneralTokenContextProvider } from './context/GeneralTokenContext';
 import Users from './components/views/Users';
 import UserDetail from './components/views/UserDetail';
+import { GeneralUserContextProvider } from './context/GeneralUserContext';
 const router = createBrowserRouter(
   [{
     path: '/',
@@ -72,9 +73,9 @@ root.render(
   //<React.StrictMode>
   <>
     <GeneralTokenContextProvider>
-      <GeneralCounterContextProvider>
+      <GeneralUserContextProvider>
         <RouterProvider router={router} />
-      </GeneralCounterContextProvider>
+      </GeneralUserContextProvider>
     </GeneralTokenContextProvider>
     <ToastContainer />
   </>
