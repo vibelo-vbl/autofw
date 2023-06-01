@@ -1,11 +1,14 @@
 import useRequest from "../../hooks/useRequest";
-import { useEffect } from "react";
 import { Link } from 'react-router-dom'
 import styles from "./Users.module.scss";
-
+import { useEffect, useContext } from 'react';
+import { GeneralUserContext } from '../../context/GeneralUserContext'
+import Page404 from "./Page404";
 function Users() {
     const { data, isLoading, error, request } = useRequest([])
     const { data: dataDelete, isLoading: isLoadingDelete, error: errorDelete, request: deleteUser } = useRequest([])
+    const generalUser = useContext(GeneralUserContext);
+
     useEffect(() => {
         request(`/user/users`, 'GET')
     }, [dataDelete]);
@@ -13,6 +16,11 @@ function Users() {
     const handlerDeleteuSer = (id) => {
         console.log(id)
         deleteUser(`/user/${id}`, 'DELETE')
+    }
+    if (!generalUser?.user?.admin) {
+        return (
+            <Page404 />
+        )
     }
     return (
         <div>

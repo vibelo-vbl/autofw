@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, Navigate } from 'react-router-dom'
 // import "./Navbar.style.css"
 import styles from './Navbar.module.scss'
 import LogoutIcon from './LogoutIcon'
@@ -15,6 +15,7 @@ function Navbar() {
         // localStorage.removeItem('AT-token')
         // navigate("/login")
     }
+
 
     return (
         <>

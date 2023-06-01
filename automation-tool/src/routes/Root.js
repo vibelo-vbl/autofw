@@ -22,7 +22,6 @@ function Root() {
 
   useEffect(() => {
     if (data) {
-      console.log("Aqui!")
       generalUser.setUser(data)
 
     }
