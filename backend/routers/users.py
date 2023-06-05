@@ -56,7 +56,7 @@ async def admin_user(user: User = Depends(auth_user)):
 
 
 #get users
-@router.get("/users", response_model=list[User_Reply], status_code=200)
+@router.get("/users", response_model=list[User_Reply], status_code=status.HTTP_200_OK, dependencies=[Depends(admin_user)])
 async def users_by_organization(user: User = Depends(current_user)):
     if user.superadmin:
         return users_schema(db_client.local.users.find())

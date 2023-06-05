@@ -24,8 +24,7 @@ function Navbar() {
                     <li><Link to={"/"}>Home</Link></li>
                     <li><Link to={"/contact"}>Contact</Link></li>
                     <li><Link to={"/perfil"}>Perfil</Link></li>
-                    <li><Link to={"/token"}>Token</Link></li>
-                    <li><Link to={"/map"}>Map</Link></li>
+                    <li><Link to={"/image"}>Image</Link></li>
                     {generalUser.user?.admin ? <li><Link to={"/users"}>Users</Link></li> : null}
 
                 </ul>

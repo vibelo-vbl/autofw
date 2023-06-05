@@ -19,63 +19,12 @@ import Users from './components/views/Users';
 import UserDetail from './components/views/UserDetail';
 import { GeneralUserContextProvider } from './context/GeneralUserContext';
 import DynamicrouterProvider from './routes/DynamicrouterProvider';
-// const router = createBrowserRouter(
-//   [{
-//     path: '/',
-//     element: <Root />,
-//     children: [
-//       {
-//         path: '',
-//         element: <Home />
-//       },
-//       {
-//         path: 'contact',
-//         element: <Contact />
-//       },
-//       {
-//         path: 'perfil',
-//         element: <Perfil />
-//       },
-//       {
-//         path: 'perfil/edit',
-//         element: <Perfil />
-//       },
-//       {
-//         path: 'event/:id',
-//         element: <EventDetail />
-//       },
-//       {
-//         path: 'token',
-//         element: <Token />
-//       },
-//       {
-//         path: 'map',
-//         element: <Map />
-//       },
-//       {
-//         path: 'users',
-//         element: <Users />
-//       },
-//       {
-//         path: 'user/create',
-//         element: <UserDetail />
-//       },
-//       {
-//         path: 'user/:id',
-//         element: <UserDetail />
-//       }
-//     ]
-//   }, {
-//     path: 'login',
-//     element: <Login />
-//   }])
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  //<React.StrictMode>
   <>
     <GeneralTokenContextProvider>
       <GeneralUserContextProvider>
-        {/* <RouterProvider router={router} /> */}
         <DynamicrouterProvider />
       </GeneralUserContextProvider>
     </GeneralTokenContextProvider>

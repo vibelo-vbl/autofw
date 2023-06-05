@@ -1,4 +1,4 @@
-import { json, useParams } from "react-router-dom";
+import { json, useParams, Link } from "react-router-dom";
 import useRequest from "../../hooks/useRequest";
 import React, { useEffect, useState } from "react";
 import Spinner from "../general/Spinner"
@@ -98,6 +98,8 @@ const UserDetail = () => {
                         <label for="admin">Disabled</label>
                         <br />
                         <button className={"button"} type="submit">Save</button>
+                        <div><Link className={"button"} to={`/users`}>Cancel</Link></div>
+
                     </form>
                 </div>
             </div>}

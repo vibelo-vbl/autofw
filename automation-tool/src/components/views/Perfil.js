@@ -18,6 +18,13 @@ const schema = yup.object({
   organization: yup.string().matches(/^[a-zA-Z ]+$/, "Must not to contains numbers, symbols, etc").required(),
   email: yup.string().email().required(),
   password: yup.string().required(),
+  // image: yup.mixed()
+  //   .test("type", "We only support jpeg and jpg format", function (value) {
+  //     return value && (value.type === "image/jpg" || value.type === "image/jpeg");
+  //   })
+  //   .test("type", "Max allowed size is 100KB", function (value) {
+  //     return value && value.size <= 102400;
+  //   })
 }).required();
 
 
@@ -27,10 +34,10 @@ function Perfil() {
   // const navigate = useNavigate()
   const generalToken = useContext(GeneralTokenContext);
   const [editModeinput, setEditmodeInput] = useState(true);
-  const { register, handleSubmit, reset, formState: { errors } } = useForm({ resolver: yupResolver(schema) })
+  const { register, handleSubmit, reset, formState: { errors }, setValue, watch } = useForm({ resolver: yupResolver(schema) })
   const { data, isLoading, error, request } = useRequest(null)
   const { data: dataUpdated, isLoading: isLoadingUpdated, error: errorUpdated, request: updatedUser } = useRequest(null)
-
+  const watchImage = watch("image")
 
   useEffect(() => {
     request(`/user/me`, 'GET')
@@ -39,6 +46,21 @@ function Perfil() {
   useEffect(() => {
     reset(data)
   }, [data]);
+
+  const convertToBase64 = (e) => {
+    console.log(e);
+    var reader = new FileReader();
+
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      setValue("image", reader.result)
+    }
+    reader.onerror = error => {
+      console.log("Error:", error)
+    }
+  }
+
+
 
   const handlerOnsubmit = (data) => {
     console.log(data)
@@ -59,8 +81,15 @@ function Perfil() {
           <p>{errors.surname?.message}</p>
           <div className={styles.formContainer}>Organization <input {...register("organization")} type="text" disabled={editModeinput} /></div>
           <p>{errors.organization?.message}</p>
+          <div className={styles.formContainer}>Organization <select {...register("organization")} disabled={editModeinput} >
+            <option value="OHCRH">OHCRH</option>
+            <option value="UNICC">UNICC</option>
+          </select></div>
           <div className={styles.formContainer}>Email <input {...register("email")} type="email" disabled={editModeinput} /></div>
           <p>{errors.email?.message}</p>
+          <div className={styles.formContainer}>Email <input {...register("image")} type="text" disabled={editModeinput} /></div>
+          <input accept="image/*" type="file" onChange={convertToBase64} />
+          <img src={watchImage} />
           {!editModeinput ? <><div className={styles.formContainer}>Password <input {...register("password")} type="password" disabled={editModeinput} /></div><p>{errors.password?.message}</p></> : null}
           {!editModeinput ? <button className={"button"} type="submit">Submit</button> : null}
           <button className={"button"} type="button" onClick={() => {

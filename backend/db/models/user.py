@@ -10,7 +10,8 @@ class User(BaseModel):
     disabled: bool
     password: str
     superadmin: bool | None
-    admin: bool 
+    admin: bool
+    image: str | None 
 
 class User_Reply(BaseModel):
     id: str | None

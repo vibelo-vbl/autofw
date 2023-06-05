@@ -8,6 +8,7 @@ def user_schema(user) -> dict:
             "disabled": bool(user["disabled"]),
             "password": str(user["password"]),
             "superadmin": bool(user["superadmin"]),
+            "image": str(user["image"]),
             "admin": bool(user["admin"])
     }
 

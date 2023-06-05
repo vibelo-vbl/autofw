@@ -11,7 +11,7 @@ import EventDetail from '../components/views/EventDetail';
 import Token from '../components/views/Token';
 import Users from '../components/views/Users';
 import UserDetail from '../components/views/UserDetail';
-
+import Image from '../components/views/Image';
 const DynamicrouterProvider = () => {
     const generalUser = useContext(GeneralUserContext);
     const routers = [{
@@ -39,14 +39,6 @@ const DynamicrouterProvider = () => {
                 element: <EventDetail />
             },
             {
-                path: 'token',
-                element: <Token />
-            },
-            {
-                path: 'map',
-                element: <Map />
-            },
-            {
                 path: 'users',
                 element: <Users />
             },
@@ -55,16 +47,22 @@ const DynamicrouterProvider = () => {
                 element: <UserDetail />
             },
             {
+                path: 'image',
+                element: <Image />
+            },
+            {
                 path: 'user/:id',
                 element: <UserDetail />
             }
+
         ]
     }, {
         path: 'login',
         element: <Login />
     }]
-    routers[0].children = routers[0].children.filter((item)=>{
-        if(item.path === 'users' && !generalUser?.user?.admin){
+    // se aplica un filtro en children para que filtre el path users cuando generalUser.user.admin sea false 
+    routers[0].children = routers[0].children.filter((item) => {
+        if (item.path === 'users' && !generalUser?.user?.admin) {
             return false;
         }
         return true;
