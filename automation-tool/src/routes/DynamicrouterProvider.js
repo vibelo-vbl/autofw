@@ -12,11 +12,14 @@ import Token from '../components/views/Token';
 import Users from '../components/views/Users';
 import UserDetail from '../components/views/UserDetail';
 import Image from '../components/views/Image';
+import Page404 from '../components/views/Page404';
+
 const DynamicrouterProvider = () => {
     const generalUser = useContext(GeneralUserContext);
     const routers = [{
         path: '/',
         element: <Root />,
+        errorElement: <Page404 />,
         children: [
             {
                 path: '',

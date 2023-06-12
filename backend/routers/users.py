@@ -8,7 +8,7 @@ from passlib.context import CryptContext
 import bcrypt
 from datetime import datetime, timedelta
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-
+import jmespath
 
 router = APIRouter(prefix="/user", tags=["users"])
 
@@ -42,18 +42,15 @@ async def auth_user(token: str = Depends(oauth2)):
 
 #function to check authorization
 async def current_user(user: User = Depends(auth_user)):
-    print(user)
+    # print(user)
     if user.disabled:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Usuario inactivo")
-    
     return user
 
 async def admin_user(user: User = Depends(auth_user)):
     if not user.admin:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No permissions")
-    
     return user
-
 
 #get users
 @router.get("/users", response_model=list[User_Reply], status_code=status.HTTP_200_OK, dependencies=[Depends(admin_user)])
@@ -61,6 +58,12 @@ async def users_by_organization(user: User = Depends(current_user)):
     if user.superadmin:
         return users_schema(db_client.local.users.find())
     return users_schema(db_client.local.users.find({ "organization": user.organization }))
+
+#get users
+@router.get("/org", status_code=status.HTTP_200_OK, dependencies=[Depends(current_user)])
+async def obtain_organization():
+    users = users_schema(db_client.local.users.find())
+    return list(set(jmespath.search('[*].organization', users))) 
 
 #get parameters of current user auth
 @router.get("/me")
@@ -73,7 +76,6 @@ async def me(user: User = Depends(current_user)):
 @router.get("/{id}", response_model=User_Reply, status_code=status.HTTP_200_OK, dependencies=[Depends(current_user)])
 async def user(id: str ):
     return search_user("_id", ObjectId(id))
-
 
 # Query
 @router.get("/", response_model=User_Reply, status_code=status.HTTP_200_OK, dependencies=[Depends(current_user)])

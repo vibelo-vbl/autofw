@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import useRequest from "../../hooks/useRequest";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { useDropzone } from 'react-dropzone'
 
 const schema = yup.object({
   username: yup.string().required(),
@@ -38,6 +39,19 @@ function Perfil() {
   const { data, isLoading, error, request } = useRequest(null)
   const { data: dataUpdated, isLoading: isLoadingUpdated, error: errorUpdated, request: updatedUser } = useRequest(null)
   const watchImage = watch("image")
+  const onDrop = (acceptedFiles) => {
+    console.log(acceptedFiles)
+    var reader = new FileReader();
+
+    reader.readAsDataURL(acceptedFiles[0]);
+    reader.onload = () => {
+      setValue("image", reader.result)
+    }
+    reader.onerror = error => {
+      console.log("Error:", error)
+    }
+  }
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
   useEffect(() => {
     request(`/user/me`, 'GET')
@@ -46,20 +60,6 @@ function Perfil() {
   useEffect(() => {
     reset(data)
   }, [data]);
-
-  const convertToBase64 = (e) => {
-    console.log(e);
-    var reader = new FileReader();
-
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onload = () => {
-      setValue("image", reader.result)
-    }
-    reader.onerror = error => {
-      console.log("Error:", error)
-    }
-  }
-
 
 
   const handlerOnsubmit = (data) => {
@@ -87,8 +87,13 @@ function Perfil() {
           </select></div>
           <div className={styles.formContainer}>Email <input {...register("email")} type="email" disabled={editModeinput} /></div>
           <p>{errors.email?.message}</p>
-          <div className={styles.formContainer}>Email <input {...register("image")} type="text" disabled={editModeinput} /></div>
-          <input accept="image/*" type="file" onChange={convertToBase64} />
+          {/* <input accept="image/*" type="file" onChange={convertToBase64} /> */}
+          {!editModeinput ? <div className={styles.draganddrop} {...getRootProps()}>
+            <input {...getInputProps()} />
+            {
+              isDragActive ? <p>Drop the files here ...</p> : <p>Drag 'n' drop some files here, or click to select files</p>
+            }
+          </div> : null}
           <img src={watchImage} />
           {!editModeinput ? <><div className={styles.formContainer}>Password <input {...register("password")} type="password" disabled={editModeinput} /></div><p>{errors.password?.message}</p></> : null}
           {!editModeinput ? <button className={"button"} type="submit">Submit</button> : null}
