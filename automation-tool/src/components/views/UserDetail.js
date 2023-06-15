@@ -38,6 +38,13 @@ const UserDetail = () => {
     }, [data]);
 
     useEffect(() => {
+        if (error === 'Server Error') {
+            throw new Error(error)
+        }
+
+    }, [error]);
+
+    useEffect(() => {
         if (dataUpdated === null) {
             return
         }
@@ -92,10 +99,10 @@ const UserDetail = () => {
                         {errors && errors.password ? <p> {errors.password.message} </p> : null}
                         <br />
                         <input {...register("admin")} type="checkbox" id="admin" />
-                        <label for="admin">Admin</label>
+                        <label htmlFor="admin">Admin</label>
                         <br />
                         <input {...register("disabled")} type="checkbox" id="disabled" />
-                        <label for="admin">Disabled</label>
+                        <label htmlFor="admin">Disabled</label>
                         <br />
                         <button className={"button"} type="submit">Save</button>
                         <div><Link className={"button"} to={`/users`}>Cancel</Link></div>

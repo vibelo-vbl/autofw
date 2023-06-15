@@ -33,6 +33,9 @@ const useRequest = (initialdata) => {
             if (response.status === 400) {
                 throw new Error('Authentication failed')
             }
+            if (response.status === 500) {
+                throw new Error('Server Error')
+            }
             if (response.status !== 200) {
                 const errorText = await response.text()
                 throw new Error(errorText)
