@@ -1,11 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Spinner from "../general/Spinner";
 import { toast } from 'react-toastify'
-import { GeneralTokenContext } from '../../context/GeneralTokenContext'
-import { useContext } from 'react';
-import { Link } from 'react-router-dom'
 import styles from "./Perfil.module.scss";
-import { json, useParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useRequest from "../../hooks/useRequest";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -30,14 +26,12 @@ const schema = yup.object({
 
 
 function Perfil() {
-  const endpoint = useParams()
-  const [user, setUser] = useState([]);
-  // const navigate = useNavigate()
-  const generalToken = useContext(GeneralTokenContext);
   const [editModeinput, setEditmodeInput] = useState(true);
   const { register, handleSubmit, reset, formState: { errors }, setValue, watch } = useForm({ resolver: yupResolver(schema) })
-  const { data, isLoading, error, request } = useRequest(null)
+  const { data: myUser, isLoading: isLoadingMyuser, error: errorMyser, request: getMyuser } = useRequest(null)
   const { data: dataUpdated, isLoading: isLoadingUpdated, error: errorUpdated, request: updatedUser } = useRequest(null)
+  const { data: organizations, isLoading: isLoadingorganizations, error: errorOrganizations, request: getOrganizations } = useRequest([])
+
   const watchImage = watch("image")
   const onDrop = (acceptedFiles) => {
     console.log(acceptedFiles)
@@ -54,12 +48,14 @@ function Perfil() {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
   useEffect(() => {
-    request(`/user/me`, 'GET')
+    getMyuser(`/user/me`, 'GET')
+    getOrganizations(`/user/org`, 'GET')
+
   }, []);
 
   useEffect(() => {
-    reset(data)
-  }, [data]);
+    reset(myUser)
+  }, [myUser]);
 
 
   const handlerOnsubmit = (data) => {
@@ -67,6 +63,11 @@ function Perfil() {
     updatedUser(`/user/${data.id}`, 'PUT', data)
     return
   }
+
+  // Funciona como useEffect para triggear cuando cambia los isLoading
+  const isLoading = useMemo(() => {
+    return isLoadingMyuser || isLoadingUpdated || isLoadingorganizations
+  }, [isLoadingMyuser, isLoadingUpdated, isLoadingorganizations])
 
   return (
     <div className="Home">
@@ -79,11 +80,11 @@ function Perfil() {
           <p>{errors.name?.message}</p>
           <div className={styles.formContainer}>Surname <input {...register("surname")} type="text" disabled={editModeinput} /></div>
           <p>{errors.surname?.message}</p>
-          <div className={styles.formContainer}>Organization <input {...register("organization")} type="text" disabled={editModeinput} /></div>
-          <p>{errors.organization?.message}</p>
           <div className={styles.formContainer}>Organization <select {...register("organization")} disabled={editModeinput} >
-            <option value="OHCRH">OHCRH</option>
-            <option value="UNICC">UNICC</option>
+            {organizations.map((org) => {
+              return <option value={org} key={org}>{org}</option>
+            })
+            }
           </select></div>
           <div className={styles.formContainer}>Email <input {...register("email")} type="email" disabled={editModeinput} /></div>
           <p>{errors.email?.message}</p>
