@@ -57,6 +57,16 @@ function Perfil() {
     reset(myUser)
   }, [myUser]);
 
+  useEffect(() => {
+    if (dataUpdated === null) {
+      return
+    }
+    toast.success('Congratulation!, user changed', {
+      position: "top-right",
+      theme: "light",
+    });
+  }, [dataUpdated]);
+
 
   const handlerOnsubmit = (data) => {
     console.log(data)

@@ -38,7 +38,7 @@ const UserDetail = () => {
     }, [data]);
 
     useEffect(() => {
-        if (error === 'Server Error') {
+        if (error === 'Not Found') {
             throw new Error(error)
         }
 
@@ -71,6 +71,7 @@ const UserDetail = () => {
             return
         }
         updatedUser(`/user/${id}`, 'PUT', data)
+
     }
 
     return (

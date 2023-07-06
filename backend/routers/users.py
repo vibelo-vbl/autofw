@@ -75,7 +75,12 @@ async def me(user: User = Depends(current_user)):
 # Path
 @router.get("/{id}", response_model=User_Reply, status_code=status.HTTP_200_OK, dependencies=[Depends(current_user)])
 async def user(id: str ):
-    return search_user("_id", ObjectId(id))
+    try:
+        return search_user("_id", ObjectId(id))
+    except:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No Found") 
+
+    
 
 # Query
 @router.get("/", response_model=User_Reply, status_code=status.HTTP_200_OK, dependencies=[Depends(current_user)])
