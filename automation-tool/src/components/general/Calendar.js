@@ -16,6 +16,10 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useEffect } from 'react';
 import useRequest from "../../hooks/useRequest";
+import ListItemText from '@mui/material/ListItemText';
+import ListItem from '@mui/material/ListItem';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
 
 //import './Calendar.style.css'
 //import esLocale from '@fullcalendar/core/locales/es'
@@ -91,16 +95,29 @@ function CustomEventContent({ eventInfo }) {
                                 <CloseIcon />
                             </IconButton>
                             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                                Sound
+                                {event ? event.title : 'Loading'}
                             </Typography>
-                            <Button autoFocus color="inherit" onClick={handlerOnclickoutside}>
-                                save
-                            </Button>
                         </Toolbar>
                     </AppBar>
-                    <span>Assignment Group:</span>
-                    <span>Description:</span>
-                    <Link to={`/event/${eventInfo.event.id}`}>View details</Link>
+                    {event ?
+                        <>
+                            <List>
+                                <ListItem>
+                                    <ListItemText primary='Number' secondary={event.extendedProps.number} />
+                                </ListItem>
+                                <Divider />
+                            </List>
+                            <span>Category: {event.extendedProps.category}</span>
+                            <span>Company: {event.extendedProps.company}</span>
+                            <span>Service Offering: {event.extendedProps.service_offering}</span>
+                            <span>Configuration Item: {event.extendedProps.configuration_item}</span>
+                            <span>Priority: {event.extendedProps.priority}</span>
+                            <span>Risk: {event.extendedProps.risk}</span>
+                            <span>Impact: {event.extendedProps.impact}</span>
+                            <span>Assigment Group: {event.extendedProps.assigment_group}</span>
+                            <span>Assigned To: {event.extendedProps.assigned_to}</span>
+                            <span>Description: {event.extendedProps.description}</span>
+                        </> : null}
                 </Dialog>
 
                 <div className={styles.customEventname} onClick={() => {

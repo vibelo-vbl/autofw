@@ -2,11 +2,12 @@ import { useEffect, useState, useMemo } from "react";
 import Spinner from "../general/Spinner";
 import { toast } from 'react-toastify'
 import styles from "./Perfil.module.scss";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import useRequest from "../../hooks/useRequest";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useDropzone } from 'react-dropzone'
+import TextField from '@mui/material/TextField';
 
 const schema = yup.object({
   username: yup.string().required(),
@@ -27,7 +28,7 @@ const schema = yup.object({
 
 function Perfil() {
   const [editModeinput, setEditmodeInput] = useState(true);
-  const { register, handleSubmit, reset, formState: { errors }, setValue, watch } = useForm({ resolver: yupResolver(schema) })
+  const { register, handleSubmit, reset, formState: { errors }, setValue, watch, control } = useForm({ resolver: yupResolver(schema) })
   const { data: myUser, isLoading: isLoadingMyuser, error: errorMyser, request: getMyuser } = useRequest(null)
   const { data: dataUpdated, isLoading: isLoadingUpdated, error: errorUpdated, request: updatedUser } = useRequest(null)
   const { data: organizations, isLoading: isLoadingorganizations, error: errorOrganizations, request: getOrganizations } = useRequest([])
@@ -84,9 +85,17 @@ function Perfil() {
       {isLoading ? <Spinner /> : <>
         <h1>Perfil!</h1>
         <form onSubmit={handleSubmit(handlerOnsubmit)}>
-          <div className={styles.formContainer}>User <input {...register("username")} type="text" disabled={editModeinput} /></div>
+
+          <Controller
+            control={control}
+            name="name"
+            render={({ field: { onChange, value } }) => (
+              <TextField id="filled-basic" label="Filled" variant="filled" onChange={onChange} value={value} disabled={editModeinput} />
+            )}
+          />
+          < div className={styles.formContainer}>User <input {...register("username")} type="text" disabled={editModeinput} /></div>
           <p>{errors.username?.message}</p>
-          <div className={styles.formContainer}>Name <input {...register("name")} type="text" disabled={editModeinput} /></div>
+          {/* <div className={styles.formContainer}>Name <input {...register("name")} type="text" disabled={editModeinput} /></div> */}
           <p>{errors.name?.message}</p>
           <div className={styles.formContainer}>Surname <input {...register("surname")} type="text" disabled={editModeinput} /></div>
           <p>{errors.surname?.message}</p>
