@@ -8,8 +8,12 @@ import styles from "./Login.module.scss";
 import useRequest from "../hooks/useRequest"
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { useForm } from "react-hook-form";
-
+import { useForm, Controller } from "react-hook-form";
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 
 const schema = yup.object({
     username: yup.string().required(),
@@ -20,7 +24,7 @@ function Login() {
     const navigate = useNavigate()
     const generalToken = useContext(GeneralTokenContext);
     const { data: postUpdated, isLoading: isLoadingPost, error: errorPost, request: postLogin } = useRequest(null)
-    const { register, handleSubmit, reset, formState: { errors } } = useForm({ resolver: yupResolver(schema) })
+    const { register, handleSubmit, reset, formState: { errors }, setValue, watch, control } = useForm({ resolver: yupResolver(schema) })
 
     useEffect(() => {
         if (postUpdated === null) {
@@ -47,20 +51,36 @@ function Login() {
 
 
     return (
-        <div>
-            <h1>Login!</h1>
+        <div className={styles.background}>
+            <div className={styles.logo}>
+            </div>
             <div className={styles.loginContainer}>
-                <form onSubmit={handleSubmit(handlerOnsubmit)}>
-                    <div >
-                        Username: <br /> <input {...register("username")} type="text" />
-                        {errors && errors.username ? <p> {errors.username.message} </p> : null}
-                    </div>
-                    <div>
-                        Password: <br /> <input {...register("password")} type="password" />
-                        {errors && errors.password ? <p> {errors.password.message} </p> : null}
-                    </div>
-                    <button className={"button"} type="submit">Login</button>
-                </form>
+                <Card >
+                    <CardContent>
+                        <form onSubmit={handleSubmit(handlerOnsubmit)}>
+                            <Stack spacing={2}>
+                                <Controller
+                                    control={control}
+                                    name="username"
+                                    render={({ field: { onChange, value } }) => (
+                                        <TextField id="filled-basic" label="Username" variant="filled" onChange={onChange} value={value} />
+                                    )}
+                                />
+                                {errors && errors.username ? <p> {errors.username.message} </p> : null}
+                                <Controller
+                                    control={control}
+                                    name="password"
+                                    render={({ field: { onChange, value } }) => (
+                                        <TextField id="filled-basic" label="Password" variant="filled" type="password" onChange={onChange} value={value} />
+                                    )}
+                                />
+                                {errors && errors.password ? <p> {errors.password.message} </p> : null}
+                                <Button variant="contained" type="submit">Login</Button>
+                            </Stack>
+                        </form>
+
+                    </CardContent>
+                </Card>
             </div>
         </div>
     );

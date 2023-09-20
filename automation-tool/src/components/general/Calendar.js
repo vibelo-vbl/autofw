@@ -103,11 +103,47 @@ function CustomEventContent({ eventInfo }) {
                         <>
                             <List>
                                 <ListItem>
-                                    <ListItemText primary='Number' secondary={event.extendedProps.number} />
+                                    <ListItemText primary='Change Number' secondary={event.extendedProps.category} />
+                                </ListItem>
+                                <Divider />
+                                <ListItem>
+                                    <ListItemText primary='Company' secondary={event.extendedProps.company} />
+                                </ListItem>
+                                <Divider />
+                                <ListItem>
+                                    <ListItemText primary='Service Offering' secondary={event.extendedProps.service_offering} />
+                                </ListItem>
+                                <Divider />
+                                <ListItem>
+                                    <ListItemText primary='Configuration Item' secondary={event.extendedProps.configuration_item} />
+                                </ListItem>
+                                <Divider />
+                                <ListItem>
+                                    <ListItemText primary='Priority' secondary={event.extendedProps.priority} />
+                                </ListItem>
+                                <Divider />
+                                <ListItem>
+                                    <ListItemText primary='Risk' secondary={event.extendedProps.risk} />
+                                </ListItem>
+                                <Divider />
+                                <ListItem>
+                                    <ListItemText primary='Impact' secondary={event.extendedProps.impact} />
+                                </ListItem>
+                                <Divider />
+                                <ListItem>
+                                    <ListItemText primary='Assigment Group' secondary={event.extendedProps.assigment_group} />
+                                </ListItem>
+                                <Divider />
+                                <ListItem>
+                                    <ListItemText primary='Assigned To' secondary={event.extendedProps.assigned_to} />
+                                </ListItem>
+                                <Divider />
+                                <ListItem>
+                                    <ListItemText primary='Description' secondary={event.extendedProps.description} />
                                 </ListItem>
                                 <Divider />
                             </List>
-                            <span>Category: {event.extendedProps.category}</span>
+                            {/* <span>Category: {event.extendedProps.category}</span>
                             <span>Company: {event.extendedProps.company}</span>
                             <span>Service Offering: {event.extendedProps.service_offering}</span>
                             <span>Configuration Item: {event.extendedProps.configuration_item}</span>
@@ -116,7 +152,7 @@ function CustomEventContent({ eventInfo }) {
                             <span>Impact: {event.extendedProps.impact}</span>
                             <span>Assigment Group: {event.extendedProps.assigment_group}</span>
                             <span>Assigned To: {event.extendedProps.assigned_to}</span>
-                            <span>Description: {event.extendedProps.description}</span>
+                            <span>Description: {event.extendedProps.description}</span> */}
                         </> : null}
                 </Dialog>
 

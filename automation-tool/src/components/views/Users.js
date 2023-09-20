@@ -11,7 +11,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
+import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 function Users() {
     const { data, isLoading, error, request } = useRequest([])
@@ -33,8 +36,7 @@ function Users() {
     }
     return (
         <div>
-            <h1>Users</h1>
-            <div><Link className={"button"} to={`/user/create`}>New User</Link></div>
+            <div><Button href="/user/create" variant="outlined" startIcon={<AddIcon />} >New User</Button></div>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
@@ -58,10 +60,10 @@ function Users() {
                                 <TableCell>{user.email}</TableCell>
                                 <TableCell>{user.organization}</TableCell>
                                 <TableCell>{user.disabled ? 'True' : 'False'}</TableCell>
-                                <TableCell><button className={"button"} onClick={() => {
+                                <TableCell><Button variant="contained" startIcon={<DeleteIcon />} onClick={() => {
                                     handlerDeleteuSer(user.id)
-                                }}>Delete</button></TableCell>
-                                <TableCell><Link to={`/user/${user.id}`}>Edit</Link></TableCell>
+                                }}>Delete</Button></TableCell>
+                                <TableCell><Button href={`/user/${user.id}`} variant="outlined" startIcon={<ModeEditIcon />} >Edit</Button></TableCell>
                             </TableRow>)
                         })
 

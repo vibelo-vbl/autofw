@@ -1,11 +1,39 @@
 .loginContainer {
-    border: 1px solid var(--mainColor);
-    width: 200px;
-    height: 100px;
+    width: 300px;
     margin-top: 250px;
     margin-left: auto;
     margin-right: auto;
     padding: 30px 30px 30px 30px;
     border-radius: 10px;
+    position: relative;
 
+}
+
+.logo {
+    height: 150px;
+    width: 400px;
+    background-image: url('unicc.png');
+    background-size: auto;
+    background-position: top center;
+    background-repeat: no-repeat;
+    opacity: 0.18;
+    position: relative;
+    z-index: -1;
+}
+
+.background {
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        background-image: url('background.svg');
+        background-size: cover;
+        background-position: top center;
+        background-repeat: no-repeat;
+        opacity: 0.25;
+    }
 }

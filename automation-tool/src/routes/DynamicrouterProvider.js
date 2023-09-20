@@ -26,10 +26,6 @@ const DynamicrouterProvider = () => {
                 element: <Home />
             },
             {
-                path: 'contact',
-                element: <Contact />
-            },
-            {
                 path: 'perfil',
                 element: <Perfil />
             },
@@ -50,10 +46,6 @@ const DynamicrouterProvider = () => {
                 element: <UserDetail />
             },
             {
-                path: 'image',
-                element: <Image />
-            },
-            {
                 path: 'user/:id',
                 element: <UserDetail />
             }
@@ -63,13 +55,7 @@ const DynamicrouterProvider = () => {
         path: 'login',
         element: <Login />
     }]
-    // se aplica un filtro en children para que filtre el path users cuando generalUser.user.admin sea false 
-    routers[0].children = routers[0].children.filter((item) => {
-        if (item.path === 'users' && !generalUser?.user?.admin) {
-            return false;
-        }
-        return true;
-    });
+
     const router = createBrowserRouter(routers)
     return (
         <RouterProvider router={router} />
