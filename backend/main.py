@@ -3,7 +3,7 @@ from routers import devices, users, changes, login
 from fastapi.staticfiles import StaticFiles
 import subprocess
 import os
-
+ 
 app = FastAPI()
 
 # Routers
