@@ -1,0 +1,4 @@
+automation-tool/node_modules/
+automation-tool/build/
+automation-tool/.env
+Dockerfile
