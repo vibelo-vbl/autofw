@@ -11,7 +11,7 @@ app.include_router(devices.router)
 app.include_router(users.router)
 app.include_router(changes.router)
 app.include_router(login.router)
-app.mount("/", StaticFiles(directory="../automation-tool/build", html=True), name="static")
+#app.mount("/", StaticFiles(directory="../automation-tool/build", html=True), name="static")
 
 
 @app.on_event("startup")
