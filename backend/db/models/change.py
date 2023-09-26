@@ -3,6 +3,7 @@ from datetime import datetime
 from typing_extensions import TypedDict
 
 
+
 class Change_Extended(TypedDict):
     number: str
     description: str

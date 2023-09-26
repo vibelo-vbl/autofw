@@ -21,6 +21,7 @@
 #         return [change_schema(change) for change in changes]
 
 
+
 def change_schema(change) -> dict:
     return {"id": str(change["_id"]),
             "title": change["title"],

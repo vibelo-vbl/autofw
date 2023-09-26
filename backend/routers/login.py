@@ -11,6 +11,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
+
 ALGORITHM = "HS256"
 ACCESS_TOKEN_DURATION = 10
 crypt = CryptContext(schemes=["bcrypt"])

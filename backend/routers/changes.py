@@ -41,6 +41,7 @@ def search_change_by_date(change_list: list, init_day: str, end_day: str):
             pass
     return filter_changes
 
+
 @router.get("/changes",response_model=list[Change], status_code=status.HTTP_200_OK, dependencies=[Depends(current_user)])
 async def changes():
     return changes_schema(db_client.local.change.find())

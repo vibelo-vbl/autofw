@@ -11,7 +11,8 @@ class User(BaseModel):
     password: str
     superadmin: bool | None
     admin: bool
-    image: str | None 
+    image: str | None
+     
 
 class User_Reply(BaseModel):
     id: str | None

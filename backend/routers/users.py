@@ -47,6 +47,7 @@ async def current_user(user: User = Depends(auth_user)):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Usuario inactivo")
     return user
 
+
 async def admin_user(user: User = Depends(auth_user)):
     if not user.admin:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No permissions")
